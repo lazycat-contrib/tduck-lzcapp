@@ -1,0 +1,48 @@
+lzc-sdk-version: "0.1"
+name: TDuck
+package: cloud.lazycat.app.tduck
+version: 0.0.1
+description: 开源问卷表单系统
+homepage: https://www.tduckcloud.com
+author: tduckcloud
+application:
+  subdomain: tduck
+  background_task: true
+  multi_instance: false
+  gpu_accel: false
+  kvm_accel: false
+  usb_accel: false
+  public_path:
+    - /
+  routes:
+    - /=http://tduck-platform:8999/
+services:
+  mysql:
+    image: docker.1ms.run/mysql:8.0.36
+    environment:
+      - MYSQL_ROOT_PASSWORD=tduck@mysql
+      - MYSQL_DATABASE=tduck
+      - MYSQL_ROOT_HOST=%
+      - TZ=Asia/Shanghai
+    command: --default-authentication-plugin=caching_sha2_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    binds:
+      - /lzcapp/var/db:/var/lib/mysql
+      - /lzcapp/pkg/content:/docker-entrypoint-initdb.d
+    health_check:
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h localhost
+      start_period: 5m30s
+
+  tduck-platform:
+    image: docker.1ms.run/tduckcloud/tduck-platform:latest
+    environment:
+      - JAVA_OPTS=-Duser.language=zh -XX:+UseG1GC
+      - TZ=Asia/Shanghai
+      - spring.datasource.url=jdbc:mysql://mysql:3306/tduck?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&tinyInt1isBit=false&allowPublicKeyRetrieval=true
+      - spring.datasource.username=root
+      - spring.datasource.password=tduck@mysql
+    depends_on:
+      - mysql
+    binds:
+      - /lzcapp/var/upload:/application/BOOT-INF/lib/upload
