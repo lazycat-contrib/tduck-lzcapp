@@ -1,0 +1,47 @@
+version: 1
+
+project:
+  root: .
+  build_config: lzc-build.yml
+  package_file: package.yml
+  output: .lazycat-build/tduck.lpk
+  target_arch: amd64
+
+update:
+  strategy: publish
+  allow_downgrade: false
+  version_source:
+    type: image
+    image: tduck-platform
+    bump: patch
+build:
+  run_buildscript: false
+images:
+  - id: mysql
+    target: service
+    service: mysql
+    source: mysql
+    channel: stable
+    sort: semver
+    tag_regex: '^8\.0\.\d+$'
+    delivery:
+      mode: lazycat
+  - id: tduck-platform
+    target: service
+    service: tduck-platform
+    source: tduckcloud/tduck-platform
+    channel: custom
+    sort: created
+    tag_regex: '^latest$'
+    delivery:
+      mode: lazycat
+stores:
+  official:
+    enabled: true
+    skip_if_version_exists: true
+    changelog_locales: [zh, en]
+  private:
+    enabled: true
+    skip_if_version_exists: true
+    name: TDuck
+    summary: "开源问卷表单系统"

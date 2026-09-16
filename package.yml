@@ -1,0 +1,14 @@
+package: cloud.lazycat.app.tduck
+version: 0.0.1
+name: TDuck
+description: "开源问卷表单系统"
+min_os_version: "1.5.0"
+homepage: https://www.tduckcloud.com
+author: tduckcloud
+locales:
+  zh:
+    description: "开源问卷表单系统"
+    name: TDuck
+  en:
+    description: "Open-source questionnaire and form system"
+    name: TDuck
