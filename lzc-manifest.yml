@@ -7,11 +7,10 @@ application:
   upstreams:
     - location: /
       backend: http://tduck-platform:8999/
-
 services:
   mysql:
-    # upstream: mysql:8.0.36
-    image: mysql:8.0.36
+    # upstream: mysql:8.0.46
+    image: registry.lazycat.cloud/czyt/library/mysql:ba7e2aa0a5ad97c0
     environment:
       - MYSQL_ROOT_PASSWORD={{ stable_secret "mysql_password" }}
       - MYSQL_DATABASE=tduck
@@ -26,10 +25,9 @@ services:
         - CMD-SHELL
         - mysqladmin ping -h localhost
       start_period: 5m30s
-
   tduck-platform:
-    # upstream: tduckcloud/tduck-platform:latest
-    image: tduckcloud/tduck-platform:latest
+    # upstream: tduckcloud/tduck-platform:latest@sha256:0560d2fbb28d6bd65ff9c96d9e44f22199161e10cf28fb377566da2caa1fc250
+    image: registry.lazycat.cloud/czyt/tduckcloud/tduck-platform:25a2981a36d8e697
     environment:
       - JAVA_OPTS=-Duser.language=zh -XX:+UseG1GC
       - TZ=Asia/Shanghai
