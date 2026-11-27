@@ -1,5 +1,5 @@
 package: cloud.lazycat.app.tduck
-version: 0.0.5
+version: 0.0.6
 name: TDuck
 description: "开源问卷表单系统"
 min_os_version: "1.5.0"

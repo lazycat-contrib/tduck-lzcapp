@@ -26,8 +26,8 @@ services:
         - mysqladmin ping -h localhost
       start_period: 5m30s
   tduck-platform:
-    # upstream: tduckcloud/tduck-platform:latest@sha256:375cd74c70d957a7ac994cd4c6d7b527cb32cd9343992ebee4b3914fd1809405
-    image: registry.lazycat.cloud/czyt/tduckcloud/tduck-platform:51cd3ca7ff261cbe
+    # upstream: tduckcloud/tduck-platform:latest@sha256:c32ea05f41386e84ed1442d4c363a24188897129e959502f09eb0a6b3c63f4b1
+    image: registry.lazycat.cloud/czyt/tduckcloud/tduck-platform:d4889ee6a262b456
     environment:
       - JAVA_OPTS=-Duser.language=zh -XX:+UseG1GC
       - TZ=Asia/Shanghai
